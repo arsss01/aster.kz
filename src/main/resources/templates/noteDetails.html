@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <link th:href="@{css/style.css}" rel="stylesheet">
+    <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Todo note Details</title>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <h1><a th:href="@{/todo}" class="text-white">ToDo list</a></h1>
+            <div class="navbar-nav">
+                <form th:action="@{/add-btn}" method="get">
+                    <input type="submit" value="Add a note" class=" btn btn-primary nav-item">
+                </form>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign out" class=" btn btn-secondary nav-item">
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <ul class="list-group">
+            <li th:each="note: ${noteDetails}" th:classappend="${note.getColor()}" class="list-group-item d-flex justify-content-between align-items-center">
+                <div style="flex: content">
+                    <div>
+                        <span>Title:</span>
+                        <span th:text="${note.getTitle()}"></span>
+                    </div>
+                    <div>
+                        <span>Description:</span>
+                        <span th:text="${note.getDescription()}"></span>
+                    </div>
+                    <div>
+                        <span>CreatedAt:</span>
+                        <span th:text="${note.getCreatedAt()}"></span>
+                    </div>
+                    <div>
+                        <span>UpdatedAt:</span>
+                        <span th:text="${note.getUpdatedAt()}"></span>
+                    </div>
+                </div>
+                <div class="row pull-right">
+                    <form th:action="@{/edit-btn}" method="get">
+                        <input type="text" name="id" th:value="${note.getId()}" class="d-none">
+                        <input type="submit" value="Edit" class=" btn btn-warning">
+                    </form>
+                    <form th:action="@{/delete-btn}" method="post">
+                        <input type="text" name="id" th:value="${note.getId()}" class="d-none">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </div>
+            </li>
+
+
+          </ul>
+    </div>
+    
+</body>
+</html>

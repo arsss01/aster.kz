@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <link th:href="@{css/style.css}" rel="stylesheet">
+    <link href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Todo list</title>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <form th:action="@{/todo}" class="text-white" method="get">
+                <input type="text" name="status" th:value="ACTIVE" class="d-none">
+                <input type="submit" value="ToDo List" class="nav-item btn-primary">
+            </form>
+            <form th:action="@{/todo}" class="text-white" method="get">
+                <input type="text" name="status" th:value="DONE" class="d-none">
+                <input type="submit" value="Done ToDo List" class="nav-item btn-primary">
+            </form>
+            <form th:action="@{/todo}" class="text-white" method="get">
+                <input type="text" name="status" th:value="ARCHIVED" class="d-none">
+                <input type="submit" value="Archived ToDo List" class="nav-item btn-primary">
+            </form>
+            <div class="navbar-nav">
+                <form th:action="@{/add-btn}" method="get">
+                    <input type="submit" value="Add a note" class=" btn btn-primary nav-item">
+                </form>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign out" class=" btn btn-secondary nav-item">
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <ul class="list-group">
+            <li th:each="note: ${currentUsersNotes}" th:classappend="${note.getColor()}" class="list-group-item d-flex justify-content-between align-items-center">
+                <span th:text="${note.getTitle()}"></span>
+                <span th:text="${note.getNoteStatus()}"></span>
+                <div class="row pull-right">
+                    <form th:action="@{/details}" method="get">
+                        <input type="text" name="id" th:value="${note.getId()}" class="d-none">
+                        <input type="submit" value="Details" class=" btn">
+                    </form>
+                    <form th:action="@{/update-status}" method="get">
+                        <input type="text" name="id" th:value="${note.getId()}" class="d-none">
+                        <input type="text" name="status" th:value="ARCHIVED" class="d-none">
+                        <input type="submit" value="Archive" class=" btn">
+                    </form>
+                    <form th:action="@{/update-status}" method="get">
+                        <input type="text" name="id" th:value="${note.getId()}" class="d-none">
+                        <input type="text" name="status" th:value="DONE" class="d-none">
+                        <input type="submit" value="Done" class=" btn">
+                    </form>
+                    <form th:action="@{/edit-btn}" method="get">
+                        <input type="text" name="id" th:value="${note.getId()}" class="d-none">
+                        <input type="submit" value="Edit" class=" btn btn-warning">
+                    </form>
+                    <form th:action="@{/delete-btn}" method="post">
+                        <input type="text" name="id" th:value="${note.getId()}" class="d-none">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </div>
+            </li>
+
+
+          </ul>
+    </div>
+    
+</body>
+</html>
